@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Enfant List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h2>Enfant List</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Sexe</th>
+            <th>Date de Naissance</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="enfant : ${enfants}">
+            <td th:text="${enfant.id}"></td>
+            <td th:text="${enfant.nom}"></td>
+            <td th:text="${enfant.prenom}"></td>
+            <td th:text="${enfant.sexe}"></td>
+            <td th:text="${enfant.dateNaiss}"></td>
+            <td>
+                <a th:href="@{/enfants/edit/{id}(id=${enfant.id})}" class="btn btn-primary btn-sm">Edit</a>
+                <a th:href="@{/enfants/delete/{id}(id=${enfant.id})}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a href="/enfants/add" class="btn btn-success">Add Enfant</a>
+</div>
+</body>
+</html>

@@ -2,6 +2,7 @@ package com.example.stagesaadaoui.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -10,7 +11,7 @@ import java.util.Set;
 public class Enfant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     private String nom;
     private String prenom;
@@ -18,7 +19,7 @@ public class Enfant {
     @Enumerated(EnumType.STRING)
     private Gender sexe;
 
-    private Date dateNaiss;
+    private LocalDate dateNaiss; // Update to LocalDate
 
     @OneToMany(mappedBy = "enfant")
     private Set<Inscription> inscriptions;
@@ -27,11 +28,11 @@ public class Enfant {
     public Enfant() {}
 
     // Getters and Setters
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -59,11 +60,11 @@ public class Enfant {
         this.sexe = sexe;
     }
 
-    public Date getDateNaiss() {
+    public LocalDate getDateNaiss() {
         return dateNaiss;
     }
 
-    public void setDateNaiss(Date dateNaiss) {
+    public void setDateNaiss(LocalDate dateNaiss) {
         this.dateNaiss = dateNaiss;
     }
 

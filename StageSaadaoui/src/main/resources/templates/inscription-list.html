@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Inscription List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h2>Inscription List</h2>
+
+    <!-- Form for filtering inscriptions -->
+    <form th:action="@{/enfants/listInscription}" method="get">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="stageName">Stage Name:</label>
+                <input type="text" class="form-control" id="stageName" name="stageName">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="isPaid">Is Paid:</label>
+                <select class="form-control" id="isPaid" name="isPaid">
+                    <option value="">-- Select --</option>
+                    <option value="true">Paid</option>
+                    <option value="false">Not Paid</option>
+                </select>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Apply Filters</button>
+    </form>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Child</th>
+            <th>Stage</th>
+            <th>Paid</th>
+            <!-- Add more columns as needed -->
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="inscription : ${inscriptions}">
+            <td th:text="${inscription.id}"></td> <!-- Use direct property access -->
+            <td th:text="${inscription.enfant.nom + ' ' + inscription.enfant.prenom}"></td> <!-- Access child's name -->
+            <td th:text="${inscription.stage.denom}"></td> <!-- Access stage denomination -->
+            <td th:text="${inscription.paye}"></td> <!-- Access payment status -->
+            <!-- Add more columns as needed -->
+            <td>
+                <form th:action="@{/enfants/inscription/delete/{id}(id=${inscription.id})}" method="post">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Form to add a new inscription -->
+    <h2>Add New Inscription</h2>
+    <form th:action="@{/enfants/addInscription}" method="post">
+        <div class="form-group">
+            <label for="stage">Stage:</label>
+            <select class="form-control" id="stage" name="stageId">
+                <option th:each="stage : ${stages}"
+                        th:value="${stage.id}" th:text="${stage.denom}"></option> <!-- Populate dropdown with stage denominations -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="child">Child:</label>
+            <select class="form-control" id="child" name="childId">
+                <option th:each="enfant : ${enfants}"
+                        th:value="${enfant.id}" th:text="${enfant.nom} + ' ' + ${enfant.prenom}"></option> <!-- Populate dropdown with child names -->
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Inscription</button>
+    </form>
+</div>
+</body>
+</html>

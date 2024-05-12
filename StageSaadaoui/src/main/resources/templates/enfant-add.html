@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Enfant</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h2>Add Enfant</h2>
+    <form th:action="@{/enfants/add}" method="post">
+        <div class="form-group">
+            <label for="nom">Nom:</label>
+            <input type="text" class="form-control" id="nom" name="nom">
+        </div>
+        <div class="form-group">
+            <label for="prenom">Prénom:</label>
+            <input type="text" class="form-control" id="prenom" name="prenom">
+        </div>
+        <div class="form-group">
+            <label for="sexe">Sexe:</label>
+            <select class="form-control" id="sexe" name="sexe">
+                <option value="MALE">Male</option>
+                <option value="FEMALE">Female</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="dateNaiss">Date de Naissance:</label>
+            <input type="date" class="form-control" id="dateNaiss" name="dateNaiss">
+        </div>
+        <div class="form-group">
+            <label for="stage">Stage:</label>
+            <select class="form-control" id="stage" name="stageId">
+                <option th:each="stage : ${stages}" th:value="${stage.id}" th:text="${stage.denom}"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+</body>
+</html>

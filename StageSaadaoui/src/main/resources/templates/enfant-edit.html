@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Enfant</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h2>Edit Enfant</h2>
+    <form th:action="@{/enfants/update/{id}(id=${enfant.id})}" method="post">
+        <input type="hidden" th:field="*{id}">
+        <div class="form-group">
+            <label for="nom">Nom:</label>
+            <input type="text" class="form-control" id="nom" th:value="${enfant.nom}" name="nom">
+        </div>
+        <div class="form-group">
+            <label for="prenom">Prénom:</label>
+            <input type="text" class="form-control" id="prenom" th:value="${enfant.prenom}" name="prenom">
+        </div>
+        <div class="form-group">
+            <label for="sexe">Sexe:</label>
+            <select class="form-control" id="sexe" name="sexe">
+                <option value="MALE" th:selected="${enfant.sexe == 'MALE'}">Male</option>
+                <option value="FEMALE" th:selected="${enfant.sexe == 'FEMALE'}">Female</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="dateNaiss">Date de Naissance:</label>
+            <input type="date" class="form-control" id="dateNaiss" th:value="${#dates.format(#dates.create(enfant.dateNaiss.year, enfant.dateNaiss.monthValue, enfant.dateNaiss.dayOfMonth), 'yyyy-MM-dd')}" name="dateNaiss">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+</body>
+</html>
