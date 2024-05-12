@@ -2,6 +2,8 @@ package com.example.stagesaadaoui.entity;
 
 
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Set;
 
 import java.util.Date;
@@ -17,7 +19,10 @@ public class Stage {
 
     private Integer ageMin;
     private Integer ageMax;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateDeb;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateFin;
     @OneToMany(mappedBy = "stage")
     private Set<Inscription> inscriptions;

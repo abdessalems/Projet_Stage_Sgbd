@@ -140,4 +140,47 @@ public class EnfantController {
         return "redirect:/enfants/listInscription";
     }
 
+
+
+    @GetMapping("/stages")
+    public String listStages(Model model) {
+        model.addAttribute("stages", stageRepository.findAll());
+        return "stage-list";
+    }
+
+    @GetMapping("/stages/add")
+    public String addStageForm(Model model) {
+        model.addAttribute("stage", new Stage());
+        return "stage-add";
+    }
+
+    @PostMapping("/stages/add")
+    public String addStageSubmit(@ModelAttribute Stage stage) {
+        stageRepository.save(stage);
+        return "redirect:/enfants/stages";
+    }
+
+    @GetMapping("/stages/edit/{id}")
+    public String editStageForm(@PathVariable("id") Long id, Model model) {
+        Stage stage = stageRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid stage Id:" + id));
+        model.addAttribute("stage", stage);
+        return "stage-edit";
+    }
+
+    @PostMapping("/stages/update/{id}")
+    public String updateStage(@PathVariable("id") Long id, @ModelAttribute Stage stage) {
+        stage.setId(id);
+        stageRepository.save(stage);
+        return "redirect:/enfants/stages";
+    }
+
+    @GetMapping("/stages/delete/{id}")
+    public String deleteStage(@PathVariable("id") Long id) {
+        Stage stage = stageRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid stage Id:" + id));
+        stageRepository.delete(stage);
+        return "redirect:/enfants/stages";
+    }
+
 }

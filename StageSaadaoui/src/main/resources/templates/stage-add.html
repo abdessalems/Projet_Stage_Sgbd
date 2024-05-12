@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Stage</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<div th:replace="navbar"></div>
+<body>
+<div class="container">
+    <h2>Add Stage</h2>
+    <form th:action="@{/enfants/stages/add}" method="post">
+        <div class="form-group">
+            <label for="denom">Denomination:</label>
+            <input type="text" class="form-control" id="denom" name="denom">
+        </div>
+        <div class="form-group">
+            <label for="ageMin">Minimum Age:</label>
+            <input type="number" class="form-control" id="ageMin" name="ageMin">
+        </div>
+        <div class="form-group">
+            <label for="ageMax">Maximum Age:</label>
+            <input type="number" class="form-control" id="ageMax" name="ageMax">
+        </div>
+        <div class="form-group">
+            <label for="dateDeb">Start Date:</label>
+            <input type="date" class="form-control" id="dateDeb" name="dateDeb">
+        </div>
+        <div class="form-group">
+            <label for="dateFin">End Date:</label>
+            <input type="date" class="form-control" id="dateFin" name="dateFin">
+        </div>
+        <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+</div>
+</body>
+</html>
