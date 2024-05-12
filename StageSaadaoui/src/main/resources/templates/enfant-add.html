@@ -5,33 +5,35 @@
     <title>Add Enfant</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-<div th:replace="navbar"></div>
 <body>
+<div th:replace="navbar"></div>
 <div class="container">
     <h2>Add Enfant</h2>
     <form th:action="@{/enfants/add}" method="post">
         <div class="form-group">
             <label for="nom">Nom:</label>
-            <input type="text" class="form-control" id="nom" name="nom">
+            <input type="text" class="form-control" id="nom" name="nom" required pattern="[A-Za-z]+" title="Veuillez saisir uniquement des lettres">
         </div>
         <div class="form-group">
             <label for="prenom">Prénom:</label>
-            <input type="text" class="form-control" id="prenom" name="prenom">
+            <input type="text" class="form-control" id="prenom" name="prenom" required pattern="[A-Za-z]+" title="Veuillez saisir uniquement des lettres">
         </div>
         <div class="form-group">
             <label for="sexe">Sexe:</label>
-            <select class="form-control" id="sexe" name="sexe">
+            <select class="form-control" id="sexe" name="sexe" required>
+                <option value="">Sélectionnez</option>
                 <option value="MALE">Male</option>
                 <option value="FEMALE">Female</option>
             </select>
         </div>
         <div class="form-group">
             <label for="dateNaiss">Date de Naissance:</label>
-            <input type="date" class="form-control" id="dateNaiss" name="dateNaiss">
+            <input type="date" class="form-control" id="dateNaiss" name="dateNaiss" required>
         </div>
         <div class="form-group">
             <label for="stage">Stage:</label>
             <select class="form-control" id="stage" name="stageId">
+                <option value="">Sélectionnez</option>
                 <option th:each="stage : ${stages}" th:value="${stage.id}" th:text="${stage.denom}"></option>
             </select>
         </div>

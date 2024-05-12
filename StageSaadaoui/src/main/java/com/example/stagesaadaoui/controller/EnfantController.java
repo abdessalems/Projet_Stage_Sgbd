@@ -7,8 +7,10 @@ import com.example.stagesaadaoui.repository.EnfantRepository;
 import com.example.stagesaadaoui.repository.InscriptionRepository;
 import com.example.stagesaadaoui.repository.StageRepository;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 
@@ -38,24 +40,40 @@ public class EnfantController {
         return "enfant-add";
     }
 
+
     @PostMapping("/add")
-    public String addSubmit(@ModelAttribute Enfant enfant, @RequestParam("stageId") Long stageId) {
-        // Fetch the selected stage from stageId
-        Stage stage = stageRepository.findById(stageId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid stage Id:" + stageId));
+    public String addSubmit(@Valid @ModelAttribute Enfant enfant, BindingResult bindingResult, @RequestParam(value = "stageId", required = false) Long stageId, Model model) {
+        if (bindingResult.hasErrors()) {
+            // If there are validation errors, return back to the form
+            model.addAttribute("enfant", enfant);
+            model.addAttribute("stages", stageRepository.findAll());
+            return "enfant-add";
+        }
+
+        // Fetch the selected stage from stageId if it's not null
+        Stage stage = null;
+        if (stageId != null) {
+            stage = stageRepository.findById(stageId)
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid stage Id:" + stageId));
+        }
 
         // Save the Enfant entity explicitly
         enfantRepository.save(enfant);
 
-        // Create a new inscription and associate the child with the selected stage
-        Inscription inscription = new Inscription();
-        inscription.setEnfant(enfant);
-        inscription.setStage(stage);
-        inscription.setPaye(false); // Assuming default value for paye
-        inscriptionRepository.save(inscription);
+        // Create a new inscription and associate the child with the selected stage if available
+        if (stage != null) {
+            Inscription inscription = new Inscription();
+            inscription.setEnfant(enfant);
+            inscription.setStage(stage);
+            inscription.setPaye(false); // Assuming default value for paye
+            inscriptionRepository.save(inscription);
+        }
 
         return "redirect:/enfants/list";
     }
+
+
+
 
 
     @GetMapping("/edit/{id}")
@@ -155,8 +173,10 @@ public class EnfantController {
     }
 
     @PostMapping("/stages/add")
-    public String addStageSubmit(@ModelAttribute Stage stage) {
-        stageRepository.save(stage);
+    public String addStageSubmit(@Valid @ModelAttribute Stage stage, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "stage-add";
+        }        stageRepository.save(stage);
         return "redirect:/enfants/stages";
     }
 

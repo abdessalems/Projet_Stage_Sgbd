@@ -29,12 +29,15 @@
             <td th:text="${enfant.dateNaiss}"></td>
             <td>
                 <a th:href="@{/enfants/edit/{id}(id=${enfant.id})}" class="btn btn-primary btn-sm">Edit</a>
-                <a th:href="@{/enfants/delete/{id}(id=${enfant.id})}" class="btn btn-danger btn-sm">Delete</a>
+                <!-- Add confirmation dialog for deletion -->
+                <a th:href="@{/enfants/delete/{id}(id=${enfant.id})}" class="btn btn-danger btn-sm"
+                   onclick="return confirm('Are you sure you want to delete this enfant?')">Delete</a>
             </td>
         </tr>
         </tbody>
     </table>
     <a href="/enfants/add" class="btn btn-success">Add Enfant</a>
 </div>
+
 </body>
 </html>

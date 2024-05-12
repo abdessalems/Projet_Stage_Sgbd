@@ -2,6 +2,9 @@ package com.example.stagesaadaoui.entity;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Set;
@@ -14,14 +17,23 @@ public class Stage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     @Column(unique = true)
     private String denom;
 
+    @NotNull
+    @Positive
     private Integer ageMin;
+
+    @NotNull
+    @Positive
     private Integer ageMax;
+
+    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateDeb;
 
+    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateFin;
     @OneToMany(mappedBy = "stage")

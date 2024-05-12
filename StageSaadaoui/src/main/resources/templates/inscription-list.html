@@ -48,7 +48,8 @@
             <td th:text="${inscription.paye}"></td> <!-- Access payment status -->
             <!-- Add more columns as needed -->
             <td>
-                <form th:action="@{/enfants/inscription/delete/{id}(id=${inscription.id})}" method="post">
+                <!-- Add confirmation dialog for deletion -->
+                <form th:action="@{/enfants/inscription/delete/{id}(id=${inscription.id})}" method="post" onsubmit="return confirm('Are you sure you want to delete this inscription?')">
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
             </td>

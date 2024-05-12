@@ -1,6 +1,8 @@
 package com.example.stagesaadaoui.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -13,11 +15,15 @@ public class Enfant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     private String nom;
+    @NotBlank
     private String prenom;
 
     @Enumerated(EnumType.STRING)
     private Gender sexe;
+
+    @NotNull
 
     private LocalDate dateNaiss; // Update to LocalDate
 
