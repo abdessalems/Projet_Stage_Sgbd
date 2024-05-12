@@ -18,7 +18,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/enfants")
-public class EnfantController {
+public class stageController {
     @Autowired
     private EnfantRepository enfantRepository;
     @Autowired

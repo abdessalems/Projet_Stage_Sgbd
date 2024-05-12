@@ -36,7 +36,7 @@ public class Stage {
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateFin;
-    @OneToMany(mappedBy = "stage")
+    @OneToMany(mappedBy = "stage", cascade = CascadeType.ALL)
     private Set<Inscription> inscriptions;
 
     // Constructor
