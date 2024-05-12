@@ -13,7 +13,7 @@
     <form th:action="@{/enfants/stages/update/{id}(id=${stage.id})}" method="post">
         <div class="form-group">
             <label for="denom">Denomination:</label>
-            <input type="text" class="form-control" id="denom" name="denom" th:value="${stage.denom}" required pattern="[A-Za-z]+" title="Please enter only letters">
+            <input type="text" class="form-control" id="denom" name="denom" th:value="${stage.denom}" required >
         </div>
         <div class="form-group">
             <label for="ageMin">Minimum Age:</label>

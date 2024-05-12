@@ -13,11 +13,12 @@
         <input type="hidden" th:field="*{id}">
         <div class="form-group">
             <label for="nom">Nom:</label>
-            <input type="text" class="form-control" id="nom" th:value="${enfant.nom}" name="nom">
+            <input type="text" class="form-control" id="nom" th:value="${enfant.nom}" name="nom" required pattern="[A-Za-z]+" title="Veuillez saisir uniquement des lettres" >
+
         </div>
         <div class="form-group">
             <label for="prenom">Prénom:</label>
-            <input type="text" class="form-control" id="prenom" th:value="${enfant.prenom}" name="prenom">
+            <input type="text" class="form-control" id="prenom" th:value="${enfant.prenom}" name="prenom" required pattern="[A-Za-z]+" title="Veuillez saisir uniquement des lettres">
         </div>
         <div class="form-group">
             <label for="sexe">Sexe:</label>
