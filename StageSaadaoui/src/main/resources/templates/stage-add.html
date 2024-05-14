@@ -9,26 +9,31 @@
 <div th:replace="navbar"></div>
 <div class="container">
     <h2>Ajouter Stage</h2>
-    <form th:action="@{/enfants/stages/add}" method="post">
+    <form th:action="@{/enfants/stages/add}" method="post" th:object="${stage}">
         <div class="form-group">
             <label for="denom">Dénomination :</label>
-            <input type="text" class="form-control" id="denom" name="denom" required>
+            <input type="text" class="form-control" id="denom" name="denom" th:field="*{denom}" required>
+            <small class="text-danger" th:if="${#fields.hasErrors('denom')}" th:errors="*{denom}"></small>
         </div>
         <div class="form-group">
             <label for="ageMin">Âge Minimum :</label>
-            <input type="number" class="form-control" id="ageMin" name="ageMin" required min="5">
+            <input type="number" class="form-control" id="ageMin" name="ageMin" th:field="*{ageMin}" required >
+            <small class="text-danger" th:if="${#fields.hasErrors('ageMin')}" th:errors="*{ageMin}"></small>
         </div>
         <div class="form-group">
             <label for="ageMax">Âge Maximum :</label>
-            <input type="number" class="form-control" id="ageMax" name="ageMax" required min="6">
+            <input type="number" class="form-control" id="ageMax" name="ageMax" th:field="*{ageMax}" required >
+            <small class="text-danger" th:if="${#fields.hasErrors('ageMax')}" th:errors="*{ageMax}"></small>
         </div>
         <div class="form-group">
             <label for="dateDeb">Date de Début :</label>
-            <input type="date" class="form-control" id="dateDeb" name="dateDeb" required>
+            <input type="date" class="form-control" id="dateDeb" name="dateDeb" th:field="*{dateDeb}" required>
+            <small class="text-danger" th:if="${#fields.hasErrors('dateDeb')}" th:errors="*{dateDeb}"></small>
         </div>
         <div class="form-group">
             <label for="dateFin">Date de Fin :</label>
-            <input type="date" class="form-control" id="dateFin" name="dateFin" required>
+            <input type="date" class="form-control" id="dateFin" name="dateFin" th:field="*{dateFin}" required>
+            <small class="text-danger" th:if="${#fields.hasErrors('dateFin')}" th:errors="*{dateFin}"></small>
         </div>
         <button type="submit" class="btn btn-primary">Ajouter</button>
     </form>

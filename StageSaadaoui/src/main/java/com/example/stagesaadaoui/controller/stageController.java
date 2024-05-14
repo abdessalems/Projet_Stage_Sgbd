@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -268,16 +269,39 @@ public class stageController {
     @GetMapping("/stages/add")
     public String addStageForm(Model model) {
         model.addAttribute("stage", new Stage());
+        model.addAttribute("denom", ""); // Add empty string for other attributes if needed
+        model.addAttribute("ageMin", 0); // Add default values for other attributes if needed
+        model.addAttribute("ageMax", 0);
+        model.addAttribute("dateDeb", "");
+        model.addAttribute("dateFin", "");
         return "stage-add";
     }
 
 
+
     // Submit add stage
     @PostMapping("/stages/add")
-    public String addStageSubmit(@Valid @ModelAttribute Stage stage, BindingResult bindingResult) {
+    public String addStageSubmit(@Valid @ModelAttribute("stage") Stage stage, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
+            return "stage-add"; // Return to the form with error messages if validation fails
+        }
+
+        Date startDate = stage.getDateDeb();
+        Date endDate = stage.getDateFin();
+
+        if (endDate.before(startDate)) {
+            bindingResult.rejectValue("dateFin", "stage.dateFin.invalid", "La date de fin doit être postérieure à la date de début.");
             return "stage-add";
         }
+
+        int minAge = stage.getAgeMin();
+        int maxAge = stage.getAgeMax();
+
+        if (minAge < 3 || minAge > 18 || maxAge < 3 || maxAge > 18 || minAge > maxAge) {
+            bindingResult.rejectValue("ageMin", "stage.age.invalid", "L'âge minimum et maximum doivent être compris entre 3 et 18 ans, et l'âge maximum doit être supérieur à l'âge minimum.");
+            return "stage-add";
+        }
+
         stageRepository.save(stage);
         return "redirect:/enfants/stages";
     }
