@@ -3,10 +3,10 @@ package com.example.stagesaadaoui.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
+
 import java.util.Set;
 
 @Entity
@@ -15,17 +15,19 @@ public class Enfant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "Le nom est requis")
+    @Pattern(regexp = "^[a-zA-Z]+$", message = "Le nom doit contenir uniquement des lettres")
     private String nom;
-    @NotBlank
+
+    @NotBlank(message = "Le prénom est requis")
+    @Pattern(regexp = "^[a-zA-Z]+$", message = "Le prénom doit contenir uniquement des lettres")
     private String prenom;
 
     @Enumerated(EnumType.STRING)
     private Gender sexe;
 
-    @NotNull
-
-    private LocalDate dateNaiss; // Update to LocalDate
+    @NotNull(message = "La date de naissance est requise")
+    private LocalDate dateNaiss;
 
     @OneToMany(mappedBy = "enfant")
     private Set<Inscription> inscriptions;

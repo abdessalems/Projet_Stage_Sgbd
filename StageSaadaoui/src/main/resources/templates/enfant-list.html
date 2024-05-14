@@ -2,14 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Enfant List</title>
+    <title>Liste des Enfants</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <div th:replace="navbar"></div>
 <body>
 <div class="container">
-    <h2>Enfant List</h2>
-    <a href="/enfants/add" class="btn btn-success">Add Enfant</a>
+    <h2>Liste des Enfants</h2>
+    <a href="/enfants/add" class="btn btn-success">Ajouter un Enfant</a>
     <table class="table">
         <thead>
         <tr>
@@ -29,14 +29,27 @@
             <td th:text="${enfant.sexe}"></td>
             <td th:text="${enfant.dateNaiss}"></td>
             <td>
-                <a th:href="@{/enfants/edit/{id}(id=${enfant.id})}" class="btn btn-primary btn-sm">Edit</a>
+                <a th:href="@{/enfants/edit/{id}(id=${enfant.id})}" class="btn btn-primary btn-sm">Modifier</a>
                 <!-- Add confirmation dialog for deletion -->
                 <a th:href="@{/enfants/delete/{id}(id=${enfant.id})}" class="btn btn-danger btn-sm"
-                   onclick="return confirm('Are you sure you want to delete this enfant?')">Delete</a>
+                   onclick="return confirmDelete()">Supprimer</a>
+
             </td>
         </tr>
         </tbody>
+
     </table>
+    <script>
+        function confirmDelete() {
+            return confirm("Êtes-vous sûr de vouloir supprimer ? Cette action est irréversible.");
+        }
+    </script>
+
+    <div th:if="${errorMessage}" class="alert alert-danger">
+        <p th:text="${errorMessage}"></p>
+    </div>
+
+
 </div>
 
 </body>

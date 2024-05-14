@@ -2,6 +2,7 @@ package com.example.stagesaadaoui.repository;
 
 import com.example.stagesaadaoui.entity.Enfant;
 import com.example.stagesaadaoui.entity.Inscription;
+import com.example.stagesaadaoui.entity.Stage;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -27,4 +28,10 @@ public interface InscriptionRepository extends JpaRepository<Inscription, Long> 
     List<Inscription> findInscriptionsWithEnfantAndStage();
 
     void deleteByEnfant(Enfant enfant);
+
+    List<Inscription> findByEnfantId(Long id);
+
+    List<Inscription> findByStageId(Long id);
+
+    boolean existsByEnfantAndStage(Enfant enfant, Stage stage);
 }

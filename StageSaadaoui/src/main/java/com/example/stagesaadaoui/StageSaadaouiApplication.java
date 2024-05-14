@@ -21,23 +21,23 @@ import java.util.List;
 public class StageSaadaouiApplication {
 
 
-    // Real names for enfants
-    private static final List<String> ENFANT_NAMES = Arrays.asList(
+    // Noms réels pour enfants
+    private static final List<String> NOMS_ENFANTS = Arrays.asList(
             "Saadaoui", "Jane", "Mike", "Emily", "Daniel",
             "Sophia", "Matthew", "Olivia", "David", "Emma"
     );
 
-    // Real last names for enfants
-    private static final List<String> LAST_NAMES = Arrays.asList(
+    // Noms de famille réels pour enfants
+    private static final List<String> NOMS_DE_FAMILLE = Arrays.asList(
             "Abdessalem", "Johnson", "Williams", "Brown", "Jones",
             "Miller", "Davis", "Garcia", "Rodriguez", "Wilson"
     );
 
-    // Real names for stages
-    private static final List<String> STAGE_NAMES = Arrays.asList(
-            "Summer Camp", "Winter Workshop", "Web Development Bootcamp",
-            "Art and Craft Class", "Music Festival", "Science Fair",
-            "Dance Workshop", "Coding Camp", "Sports Camp", "Cooking Class"
+    // Noms réels pour stages
+    private static final List<String> NOMS_STAGES = Arrays.asList(
+            "Camp d'été", "Atelier d'hiver", "Bootcamp de développement Web",
+            "Cours d'art et d'artisanat", "Festival de musique", "Foire scientifique",
+            "Atelier de danse", "Camp de codage", "Camp de sport", "Cours de cuisine"
     );
 
     public static void main(String[] args) {
@@ -49,22 +49,22 @@ public class StageSaadaouiApplication {
                                       StageRepository stageRepository,
                                       InscriptionRepository inscriptionRepository) {
         return args -> {
-            // Clean existing data
+            // Nettoyer les données existantes
             inscriptionRepository.deleteAll();
             enfantRepository.deleteAll();
             stageRepository.deleteAll();
 
-            // Add 10 enfants
+            // Ajouter 10 enfants
             for (int i = 0; i < 10; i++) {
                 Enfant enfant = new Enfant();
-                enfant.setNom(ENFANT_NAMES.get(i));
-                enfant.setPrenom(LAST_NAMES.get(i));
-                enfant.setSexe(Gender.MALE); // Set gender as needed
-                enfant.setDateNaiss(LocalDate.of(2010, 5, 20)); // Set birth date as needed
+                enfant.setNom(NOMS_ENFANTS.get(i));
+                enfant.setPrenom(NOMS_DE_FAMILLE.get(i));
+                enfant.setSexe(Gender.MALE); // Définir le sexe selon les besoins
+                enfant.setDateNaiss(LocalDate.of(2010, 5, 20)); // Définir la date de naissance selon les besoins
                 enfantRepository.save(enfant);
             }
 
-            final List<LocalDate> STAGE_START_DATES = Arrays.asList(
+            final List<LocalDate> DATES_DEBUT_STAGES = Arrays.asList(
                     LocalDate.of(2024, 1, 1),
                     LocalDate.of(2024, 2, 15),
                     LocalDate.of(2024, 3, 07),
@@ -82,10 +82,10 @@ public class StageSaadaouiApplication {
 
 
 
-                    // Add more start dates as needed
+                    // Ajouter plus de dates de début au besoin
             );
 
-            final List<LocalDate> STAGE_END_DATES = Arrays.asList(
+            final List<LocalDate> DATES_FIN_STAGES = Arrays.asList(
                     LocalDate.of(2024, 4, 10),
 
                     LocalDate.of(2024, 5, 10),
@@ -103,28 +103,28 @@ public class StageSaadaouiApplication {
 
                     LocalDate.of(2025, 1, 15)
 
-                    // Add more end dates as needed
+                    // Ajouter plus de dates de fin au besoin
             );
-            // Add 10 stages
-            for (int i = 0; i < STAGE_NAMES.size(); i++) {
+            // Ajouter 10 stages
+            for (int i = 0; i < NOMS_STAGES.size(); i++) {
                 Stage stage = new Stage();
-                stage.setDenom(STAGE_NAMES.get(i));
-                stage.setAgeMin(5); // Set minimum age as needed
-                stage.setAgeMax(10); // Set maximum age as needed
-                stage.setDateDeb(Date.valueOf(STAGE_START_DATES.get(i))); // Set start date from list
-                stage.setDateFin(Date.valueOf(STAGE_END_DATES.get(i))); // Set end date from list
+                stage.setDenom(NOMS_STAGES.get(i));
+                stage.setAgeMin(5); // Définir l'âge minimum selon les besoins
+                stage.setAgeMax(10); // Définir l'âge maximum selon les besoins
+                stage.setDateDeb(Date.valueOf(DATES_DEBUT_STAGES.get(i))); // Définir la date de début à partir de la liste
+                stage.setDateFin(Date.valueOf(DATES_FIN_STAGES.get(i))); // Définir la date de fin à partir de la liste
                 stageRepository.save(stage);
             }
 
-            // Add inscriptions for each enfant and each stage
+            // Ajouter des inscriptions pour chaque enfant et chaque stage
             List<Enfant> enfants = enfantRepository.findAll();
             List<Stage> stages = stageRepository.findAll();
             for (int i = 0; i < enfants.size(); i++) {
-                    Inscription inscription = new Inscription();
-                    inscription.setEnfant(enfants.get(i));
-                    inscription.setStage(stages.get(i));
-                    inscription.setPaye(i % 2 == 0); // Alternate paye status for demonstration purposes
-                    inscriptionRepository.save(inscription);
+                Inscription inscription = new Inscription();
+                inscription.setEnfant(enfants.get(i));
+                inscription.setStage(stages.get(i));
+                inscription.setPaye(i % 2 == 0); // Alterner le statut de paiement à des fins de démonstration
+                inscriptionRepository.save(inscription);
 
             }
         };

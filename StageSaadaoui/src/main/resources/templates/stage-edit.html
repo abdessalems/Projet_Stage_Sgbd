@@ -2,36 +2,36 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Edit Stage</title>
+    <title>Modifier Stage</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
 <div th:replace="navbar"></div>
 <div class="container">
-    <h2>Edit Stage</h2>
+    <h2>Modifier Stage</h2>
 
     <form th:action="@{/enfants/stages/update/{id}(id=${stage.id})}" method="post">
         <div class="form-group">
-            <label for="denom">Denomination:</label>
-            <input type="text" class="form-control" id="denom" name="denom" th:value="${stage.denom}" required >
+            <label for="denom">Dénomination :</label>
+            <input type="text" class="form-control" id="denom" name="denom" th:value="${stage.denom}" required>
         </div>
         <div class="form-group">
-            <label for="ageMin">Minimum Age:</label>
+            <label for="ageMin">Âge Minimum :</label>
             <input type="number" class="form-control" id="ageMin" name="ageMin" th:value="${stage.ageMin}" required min="5">
         </div>
         <div class="form-group">
-            <label for="ageMax">Maximum Age:</label>
+            <label for="ageMax">Âge Maximum :</label>
             <input type="number" class="form-control" id="ageMax" name="ageMax" th:value="${stage.ageMax}" required min="6">
         </div>
         <div class="form-group">
-            <label for="dateDeb">Start Date:</label>
+            <label for="dateDeb">Date de Début :</label>
             <input type="date" class="form-control" id="dateDeb" name="dateDeb" th:value="${#dates.format(stage.dateDeb, 'yyyy-MM-dd')}" required>
         </div>
         <div class="form-group">
-            <label for="dateFin">End Date:</label>
+            <label for="dateFin">Date de Fin :</label>
             <input type="date" class="form-control" id="dateFin" name="dateFin" th:value="${#dates.format(stage.dateFin, 'yyyy-MM-dd')}" required>
         </div>
-        <button type="submit" class="btn btn-primary">Update Stage</button>
+        <button type="submit" class="btn btn-primary">Mettre à Jour le Stage</button>
     </form>
 </div>
 </body>

@@ -2,80 +2,61 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Inscription List</title>
+    <title>Liste des Inscriptions</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-<div th:replace="navbar"></div>
 <body>
+<div th:replace="navbar"></div>
 <div class="container">
-    <h2>Inscription List</h2>
+    <h2>Liste des Inscriptions</h2>
 
     <!-- Form for filtering inscriptions -->
     <form th:action="@{/enfants/listInscription}" method="get">
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label for="stageName">Stage Name:</label>
+                <label for="stageName">Nom du Stage :</label>
                 <input type="text" class="form-control" id="stageName" name="stageName">
             </div>
             <div class="form-group col-md-6">
-                <label for="isPaid">Is Paid:</label>
+                <label for="isPaid">Payé :</label>
                 <select class="form-control" id="isPaid" name="isPaid">
-                    <option value="">-- Select --</option>
-                    <option value="true">Paid</option>
-                    <option value="false">Not Paid</option>
+                    <option value="">-- Sélectionnez --</option>
+                    <option value="true">Payé</option>
+                    <option value="false">Non Payé</option>
                 </select>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Apply Filters</button>
+        <button type="submit" class="btn btn-primary">Appliquer les Filtres</button>
     </form>
 
     <table class="table">
         <thead>
         <tr>
             <th>ID</th>
-            <th>Child</th>
+            <th>Enfant</th>
             <th>Stage</th>
-            <th>Paid</th>
-            <!-- Add more columns as needed -->
+            <th>Payé</th>
             <th>Actions</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="inscription : ${inscriptions}">
-            <td th:text="${inscription.id}"></td> <!-- Use direct property access -->
-            <td th:text="${inscription.enfant.nom + ' ' + inscription.enfant.prenom}"></td> <!-- Access child's name -->
-            <td th:text="${inscription.stage.denom}"></td> <!-- Access stage denomination -->
-            <td th:text="${inscription.paye}"></td> <!-- Access payment status -->
-            <!-- Add more columns as needed -->
+            <td th:text="${inscription.id}"></td> <!-- Utilisez un accès direct à la propriété -->
+            <td th:text="${inscription.enfant.nom + ' ' + inscription.enfant.prenom}"></td> <!-- Accédez au nom de l'enfant -->
+            <td th:text="${inscription.stage.denom}"></td> <!-- Accédez à la dénomination du stage -->
+            <td th:text="${inscription.paye}"></td> <!-- Accédez au statut de paiement -->
             <td>
-                <!-- Add confirmation dialog for deletion -->
-                <form th:action="@{/enfants/inscription/delete/{id}(id=${inscription.id})}" method="post" onsubmit="return confirm('Are you sure you want to delete this inscription?')">
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                <!-- Ajoutez une boîte de dialogue de confirmation pour la suppression -->
+                <form th:action="@{/enfants/inscription/delete/{id}(id=${inscription.id})}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette inscription ?')">
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
                 </form>
             </td>
         </tr>
         </tbody>
     </table>
+    <!-- Button to navigate to add inscription page -->
+    <a th:href="@{/enfants/addInscription}" class="btn btn-primary">Ajouter une Nouvelle Inscription</a>
 
-    <!-- Form to add a new inscription -->
-    <h2>Add New Inscription</h2>
-    <form th:action="@{/enfants/addInscription}" method="post">
-        <div class="form-group">
-            <label for="stage">Stage:</label>
-            <select class="form-control" id="stage" name="stageId">
-                <option th:each="stage : ${stages}"
-                        th:value="${stage.id}" th:text="${stage.denom}"></option> <!-- Populate dropdown with stage denominations -->
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="child">Child:</label>
-            <select class="form-control" id="child" name="childId">
-                <option th:each="enfant : ${enfants}"
-                        th:value="${enfant.id}" th:text="${enfant.nom} + ' ' + ${enfant.prenom}"></option> <!-- Populate dropdown with child names -->
-            </select>
-        </div>
-        <button type="submit" class="btn btn-primary">Add Inscription</button>
-    </form>
 </div>
 </body>
 </html>

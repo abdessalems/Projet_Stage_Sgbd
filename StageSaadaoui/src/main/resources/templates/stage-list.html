@@ -2,22 +2,22 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Stage List</title>
+    <title>Liste des Stages</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <div th:replace="navbar"></div>
 <body>
 <div class="container">
-    <h2>Stage List</h2>
-    <a href="/enfants/stages/add" class="btn btn-success">Add Stage</a>
+    <h2>Liste des Stages</h2>
+    <a href="/enfants/stages/add" class="btn btn-success">Ajouter Stage</a>
     <table class="table">
         <thead>
         <tr>
             <th>ID</th>
-            <th>Denomination</th>
-            <th>Age Range</th>
-            <th>Date Start</th>
-            <th>Date End</th>
+            <th>Dénomination</th>
+            <th>Tranche d'âge</th>
+            <th>Date de Début</th>
+            <th>Date de Fin</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -29,12 +29,23 @@
             <td th:text="${stage.dateDeb}"></td>
             <td th:text="${stage.dateFin}"></td>
             <td>
-                <a th:href="@{/enfants/stages/edit/{id}(id=${stage.id})}" class="btn btn-primary btn-sm">Edit</a>
-                <a th:href="@{/enfants/stages/delete/{id}(id=${stage.id})}" class="btn btn-danger btn-sm">Delete</a>
+                <a th:href="@{/enfants/stages/edit/{id}(id=${stage.id})}" class="btn btn-primary btn-sm">Modifier</a>
+                <a th:href="@{/enfants/stages/delete/{id}(id=${stage.id})}" class="btn btn-danger btn-sm"
+                   onclick="return confirmDelete()">Supprimer</a>
             </td>
         </tr>
         </tbody>
+
+
     </table>
-</div>
+    <script>
+        function confirmDelete() {
+            return confirm("Êtes-vous sûr de vouloir supprimer ? Cette action est irréversible.");
+        }
+    </script>
+    <div th:if="${errorMessage}" class="alert alert-danger">
+        <p th:text="${errorMessage}"></p>
+    </div>
+  </div>
 </body>
 </html>

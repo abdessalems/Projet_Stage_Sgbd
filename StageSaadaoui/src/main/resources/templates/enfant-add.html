@@ -2,42 +2,54 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Add Enfant</title>
+    <title>Ajouter Enfant</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
 <div th:replace="navbar"></div>
 <div class="container">
-    <h2>Add Enfant</h2>
-    <form th:action="@{/enfants/add}" method="post">
-        <div class="form-group">
-            <label for="nom">Nom:</label>
-            <input type="text" class="form-control" id="nom" name="nom" required pattern="[A-Za-z]+" title="Veuillez saisir uniquement des lettres">
+    <h2>Ajouter Enfant</h2>
+    <form th:action="@{/enfants/add}" method="post" th:object="${enfant}">
+        <!-- Display backend validation errors for nom field -->
+        <div th:if="${#fields.hasErrors('nom')}" class="alert alert-danger">
+            <p th:text="${#fields.errors('nom')}"></p>
         </div>
         <div class="form-group">
-            <label for="prenom">Prénom:</label>
-            <input type="text" class="form-control" id="prenom" name="prenom" required pattern="[A-Za-z]+" title="Veuillez saisir uniquement des lettres">
+            <label for="nom">Nom :</label>
+            <input type="text" class="form-control" id="nom" th:field="*{nom}"  >
+        </div>
+        <!-- Display backend validation errors for prenom field -->
+        <div th:if="${#fields.hasErrors('prenom')}" class="alert alert-danger">
+            <p th:text="${#fields.errors('prenom')}"></p>
         </div>
         <div class="form-group">
-            <label for="sexe">Sexe:</label>
-            <select class="form-control" id="sexe" name="sexe" required>
+            <label for="prenom">Prénom :</label>
+            <input type="text" class="form-control" id="prenom" th:field="*{prenom}"  >
+        </div>
+        <!-- Display backend validation errors for dateNaiss field -->
+        <div th:if="${#fields.hasErrors('dateNaiss')}" class="alert alert-danger">
+            <p th:text="${#fields.errors('dateNaiss')}"></p>
+        </div>
+        <div class="form-group">
+            <label for="dateNaiss">Date de Naissance :</label>
+            <input type="date" class="form-control" id="dateNaiss" th:field="*{dateNaiss}" >
+        </div>
+        <div class="form-group">
+            <label for="sexe">Sexe :</label>
+            <select class="form-control" id="sexe" th:field="*{sexe}" required>
                 <option value="">Sélectionnez</option>
-                <option value="MALE">Male</option>
-                <option value="FEMALE">Female</option>
+                <option value="MALE">Masculin</option>
+                <option value="FEMALE">Féminin</option>
             </select>
         </div>
         <div class="form-group">
-            <label for="dateNaiss">Date de Naissance:</label>
-            <input type="date" class="form-control" id="dateNaiss" name="dateNaiss" required>
-        </div>
-        <div class="form-group">
-            <label for="stage">Stage:</label>
+            <label for="stage">Stage :</label>
             <select class="form-control" id="stage" name="stageId">
                 <option value="">Sélectionnez</option>
                 <option th:each="stage : ${stages}" th:value="${stage.id}" th:text="${stage.denom}"></option>
             </select>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Soumettre</button>
     </form>
 </div>
 </body>

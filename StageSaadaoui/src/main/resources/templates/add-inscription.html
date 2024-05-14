@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajouter une Nouvelle Inscription</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div th:replace="navbar"></div>
+<div class="container">
+    <!-- Formulaire pour ajouter une nouvelle inscription -->
+    <h2>Ajouter une Nouvelle Inscription</h2>
+    <!-- Display error message if returned from backend -->
+    <div th:if="${errorMessage}" class="alert alert-danger">
+        <p th:text="${errorMessage}"></p>
+    </div>
+    <!-- Corrected form action URL -->
+    <form th:action="@{/enfants/addInscription}" method="post">
+        <div class="form-group">
+            <label for="stage">Stage :</label>
+            <select class="form-control" id="stage" name="stageId">
+                <option value="">Select Stage</option>
+                <option th:each="stage : ${stages}" th:value="${stage.id}" th:text="${stage.denom}">Stage Name</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="child">Enfant :</label>
+            <select class="form-control" id="child" name="childId">
+                <option th:each="enfant : ${enfants}" th:value="${enfant.id}" th:text="${enfant.nom} + ' ' + ${enfant.prenom}">Child Name</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Ajouter Inscription</button>
+    </form>
+</div>
+</body>
+</html>
