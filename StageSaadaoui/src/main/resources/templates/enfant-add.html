@@ -42,13 +42,6 @@
                 <option value="FEMALE">Féminin</option>
             </select>
         </div>
-        <div class="form-group">
-            <label for="stage">Stage :</label>
-            <select class="form-control" id="stage" name="stageId">
-                <option value="">Sélectionnez</option>
-                <option th:each="stage : ${stages}" th:value="${stage.id}" th:text="${stage.denom}"></option>
-            </select>
-        </div>
         <button type="submit" class="btn btn-primary">Soumettre</button>
     </form>
 </div>

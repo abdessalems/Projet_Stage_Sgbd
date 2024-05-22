@@ -26,7 +26,11 @@
                 </select>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Appliquer les Filtres</button>
+        <button type="submit" class="btn btn-primary mr-5">Appliquer les Filtres</button>
+        <!-- Button to navigate to add inscription page -->
+        <a th:href="@{/enfants/addInscription}" class="btn btn-success ">
+            Ajouter une Nouvelle Inscription
+        </a>
     </form>
 
     <table class="table">
@@ -54,9 +58,6 @@
         </tr>
         </tbody>
     </table>
-    <!-- Button to navigate to add inscription page -->
-    <a th:href="@{/enfants/addInscription}" class="btn btn-primary">Ajouter une Nouvelle Inscription</a>
-
 </div>
 </body>
 </html>

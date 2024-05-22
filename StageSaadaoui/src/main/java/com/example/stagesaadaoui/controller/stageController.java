@@ -7,6 +7,8 @@ import com.example.stagesaadaoui.repository.EnfantRepository;
 import com.example.stagesaadaoui.repository.InscriptionRepository;
 import com.example.stagesaadaoui.repository.StageRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.validation.BindingResult;
+
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -308,7 +310,7 @@ public class stageController {
 
 
     // Edit stage form
-    @GetMapping("/stages/edit/{id}")
+    @GetMapping("/enfants/stages/edit/{id}")
     public String editStageForm(@PathVariable("id") Long id, Model model) {
         Stage stage = stageRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid stage Id:" + id));
@@ -316,15 +318,28 @@ public class stageController {
         return "stage-edit";
     }
 
-
-
     // Update stage
-    @PostMapping("/stages/update/{id}")
-    public String updateStage(@PathVariable("id") Long id, @ModelAttribute Stage stage) {
-        stage.setId(id);
-        stageRepository.save(stage);
-        return "redirect:/enfants/stages";
+    @PostMapping("/enfants/stages/update/{id}")
+    public String updateStage(@PathVariable("id") Long id, @Valid @ModelAttribute Stage stage, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("stage", stage);
+            return "stage-edit";
+        }
+
+        // Update the stage in the database
+        Stage updatedStage = stageRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid stage Id:" + id));
+        updatedStage.setDenom(stage.getDenom());
+        updatedStage.setAgeMin(stage.getAgeMin());
+        updatedStage.setAgeMax(stage.getAgeMax());
+        updatedStage.setDateDeb(stage.getDateDeb());
+        updatedStage.setDateFin(stage.getDateFin());
+        stageRepository.save(updatedStage);
+
+        return "redirect:/enfants/stages"; // Redirect to the list of stages
     }
+
+
 
 
     // Delete stage
