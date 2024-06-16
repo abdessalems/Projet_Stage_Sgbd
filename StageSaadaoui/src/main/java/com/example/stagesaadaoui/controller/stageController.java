@@ -310,33 +310,61 @@ public class stageController {
 
 
     // Edit stage form
-    @GetMapping("/enfants/stages/edit/{id}")
+    @GetMapping("/stages/edit/{id}")
     public String editStageForm(@PathVariable("id") Long id, Model model) {
         Stage stage = stageRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid stage Id:" + id));
+                .orElse(null); // Gracefully handle missing stages
+        if (stage == null) {
+            model.addAttribute("errorMessage", "Invalid stage Id: " + id);
+            model.addAttribute("stages", stageRepository.findAll());
+            return "stage-list"; // Or redirect to a not-found page
+        }
         model.addAttribute("stage", stage);
         return "stage-edit";
     }
-
     // Update stage
-    @PostMapping("/enfants/stages/update/{id}")
-    public String updateStage(@PathVariable("id") Long id, @Valid @ModelAttribute Stage stage, BindingResult bindingResult, Model model) {
+    @PostMapping("/stages/update/{id}")
+    public String updateStage(@PathVariable("id") Long id, @Valid @ModelAttribute("stage") Stage stage,
+                              BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("stage", stage);
             return "stage-edit";
         }
 
-        // Update the stage in the database
         Stage updatedStage = stageRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid stage Id:" + id));
+                .orElse(null);
+        if (updatedStage == null) {
+            model.addAttribute("errorMessage", "Invalid stage Id: " + id);
+            model.addAttribute("stages", stageRepository.findAll());
+            return "stage-list";
+        }
+
         updatedStage.setDenom(stage.getDenom());
         updatedStage.setAgeMin(stage.getAgeMin());
         updatedStage.setAgeMax(stage.getAgeMax());
         updatedStage.setDateDeb(stage.getDateDeb());
         updatedStage.setDateFin(stage.getDateFin());
-        stageRepository.save(updatedStage);
 
-        return "redirect:/enfants/stages"; // Redirect to the list of stages
+        // Check date logic
+        if (updatedStage.getDateFin().before(updatedStage.getDateDeb())) {
+            bindingResult.rejectValue("dateFin", "stage.dateFin.invalid",
+                    "La date de fin doit être postérieure à la date de début.");
+            model.addAttribute("stage", updatedStage);
+            return "stage-edit";
+        }
+
+        // Check age logic
+        if (updatedStage.getAgeMin() < 3 || updatedStage.getAgeMin() > 18 ||
+                updatedStage.getAgeMax() < 3 || updatedStage.getAgeMax() > 18 ||
+                updatedStage.getAgeMin() > updatedStage.getAgeMax()) {
+            bindingResult.rejectValue("ageMin", "stage.age.invalid",
+                    "L'âge minimum et maximum doivent être compris entre 3 et 18 ans, et l'âge maximum doit être supérieur à l'âge minimum.");
+            model.addAttribute("stage", updatedStage);
+            return "stage-edit";
+        }
+
+        stageRepository.save(updatedStage);
+        return "redirect:/enfants/stages";
     }
 
 

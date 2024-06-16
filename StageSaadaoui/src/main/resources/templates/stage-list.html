@@ -5,13 +5,13 @@
     <title>Liste des Stages</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-<div th:replace="navbar"></div>
 <body>
-<div class="container">
+<div th:replace="navbar"></div>
+<div class="container mt-4">
     <h2>Liste des Stages</h2>
-    <a href="/enfants/stages/add" class="btn btn-success">Ajouter Stage</a>
-    <table class="table">
-        <thead>
+    <a href="/enfants/stages/add" class="btn btn-success mb-3">Ajouter Stage</a>
+    <table class="table table-striped">
+        <thead class="thead-dark">
         <tr>
             <th>ID</th>
             <th>Dénomination</th>
@@ -26,8 +26,8 @@
             <td th:text="${stage.id}"></td>
             <td th:text="${stage.denom}"></td>
             <td th:text="${stage.ageMin} + ' - ' + ${stage.ageMax}"></td>
-            <td th:text="${stage.dateDeb}"></td>
-            <td th:text="${stage.dateFin}"></td>
+            <td th:text="${#dates.format(stage.dateDeb, 'dd/MM/yyyy')}"></td>
+            <td th:text="${#dates.format(stage.dateFin, 'dd/MM/yyyy')}"></td>
             <td>
                 <a th:href="@{/enfants/stages/edit/{id}(id=${stage.id})}" class="btn btn-primary btn-sm">Modifier</a>
                 <a th:href="@{/enfants/stages/delete/{id}(id=${stage.id})}" class="btn btn-danger btn-sm"
@@ -35,17 +35,17 @@
             </td>
         </tr>
         </tbody>
-
-
     </table>
-    <script>
-        function confirmDelete() {
-            return confirm("Êtes-vous sûr de vouloir supprimer ? Cette action est irréversible.");
-        }
-    </script>
-    <div th:if="${errorMessage}" class="alert alert-danger">
+    <!-- Error message display -->
+    <div th:if="${errorMessage}" class="alert alert-danger mt-3">
         <p th:text="${errorMessage}"></p>
     </div>
-  </div>
+</div>
+
+<script>
+    function confirmDelete() {
+        return confirm("Êtes-vous sûr de vouloir supprimer ? Cette action est irréversible.");
+    }
+</script>
 </body>
 </html>
